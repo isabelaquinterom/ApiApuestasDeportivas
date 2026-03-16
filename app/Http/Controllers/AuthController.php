@@ -10,8 +10,15 @@ use Carbon\Carbon;
 
 /**
  * Controlador de Autenticacion
- * Maneja el registro, login con 2FA y logout de usuarios
- * Flujo de login: credenciales -> OTP por correo -> JWT
+ * Maneja el registro, login con 2FA, verificacion OTP, logout y perfil del usuario
+ *
+ * Flujo de login:
+ * 1. El usuario envia email y password
+ * 2. Se validan las credenciales
+ * 3. Se genera un codigo OTP
+ * 4. El OTP se envia al correo
+ * 5. El usuario valida el OTP
+ * 6. Se entrega el token JWT
  *
  * @author   Proyecto Apuestas Deportivas
  * @date     2026-03-16 02:00 COT
@@ -29,7 +36,7 @@ class AuthController extends Controller
         // Validar que los campos requeridos esten presentes y sean correctos
         $request->validate([
             'nombre'   => 'required|string',
-            'email'    => 'required|email|unique:users',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6',
         ]);
 
@@ -66,7 +73,9 @@ class AuthController extends Controller
 
         // Verificar que el usuario exista y la contrasena sea correcta
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+            return response()->json([
+                'message' => 'Credenciales incorrectas'
+            ], 401);
         }
 
         // Generar codigo OTP aleatorio de 6 digitos
@@ -80,19 +89,20 @@ class AuthController extends Controller
         // Enviar OTP por correo usando Symfony Mailer directamente
         // Se usa este metodo para evitar problemas de SSL en Windows
         $transport = new \Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport(
-    'smtp.gmail.com',
-    587,
-    false
-);
-         $transport->setUsername(env('MAIL_USERNAME'));
-         $transport->setPassword(env('MAIL_PASSWORD'));
-         $transport->getStream()->setStreamOptions([
-        'ssl' => [
-        'allow_self_signed' => true,
-        'verify_peer'       => false,
-        'verify_peer_name'  => false,
-    ]
-]);
+            'smtp.gmail.com',
+            587,
+            false
+        );
+
+        $transport->setUsername(env('MAIL_USERNAME'));
+        $transport->setPassword(env('MAIL_PASSWORD'));
+        $transport->getStream()->setStreamOptions([
+            'ssl' => [
+                'allow_self_signed' => true,
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
+            ]
+        ]);
 
         $mailer = new \Symfony\Component\Mailer\Mailer($transport);
 
@@ -126,17 +136,23 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
+            return response()->json([
+                'message' => 'Usuario no encontrado'
+            ], 404);
         }
 
         // Verificar que el OTP ingresado coincida con el guardado
         if ($user->otp_code != $request->otp) {
-            return response()->json(['message' => 'Codigo OTP incorrecto'], 401);
+            return response()->json([
+                'message' => 'Codigo OTP incorrecto'
+            ], 401);
         }
 
-        // Verificar que el OTP no haya expirado (5 minutos)
-        if (Carbon::now()->isAfter($user->otp_expiration)) {
-            return response()->json(['message' => 'El codigo OTP ha expirado'], 401);
+        // Verificar que exista fecha de expiracion y que no haya expirado
+        if (!$user->otp_expiration || Carbon::now()->isAfter($user->otp_expiration)) {
+            return response()->json([
+                'message' => 'El codigo OTP ha expirado'
+            ], 401);
         }
 
         // Limpiar el OTP de la base de datos una vez usado exitosamente
@@ -169,17 +185,29 @@ class AuthController extends Controller
     {
         // Invalidar el token JWT para que no pueda ser usado de nuevo
         JWTAuth::invalidate(JWTAuth::getToken());
-        return response()->json(['message' => 'Sesion cerrada correctamente']);
+
+        return response()->json([
+            'message' => 'Sesion cerrada correctamente'
+        ]);
     }
 
     /**
      * ME
-     * Retorna la informacion del usuario actualmente autenticado
+     * Retorna la informacion del usuario autenticado
      * Endpoint: GET /api/me
      */
     public function me()
     {
+        // Obtener el usuario autenticado desde el token
         $user = JWTAuth::parseToken()->authenticate();
-        return response()->json($user);
+
+        // Retornar solo la informacion importante del perfil
+        return response()->json([
+            'id'     => $user->id,
+            'nombre' => $user->nombre,
+            'email'  => $user->email,
+            'rol'    => $user->rol,
+            'saldo'  => $user->saldo,
+        ]);
     }
 }
