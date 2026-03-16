@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -41,6 +42,34 @@ class Event extends Model
     {
         return $this->hasOne(Result::class);
     }
+
+    /**
+     * Formatear fecha del evento
+     */
+    public function getFechaEventoAttribute($value)
+    {
+        return Carbon::parse($value)
+            ->timezone('America/Bogota')
+            ->format('d-m-Y H:i');
+    }
+
+    /**
+     * Formatear fecha de creacion
+     */
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)
+            ->timezone('America/Bogota')
+            ->format('d-m-Y H:i');
+    }
+
+    /**
+     * Formatear fecha de actualizacion
+     */
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)
+            ->timezone('America/Bogota')
+            ->format('d-m-Y H:i');
+    }
 }
-
-
