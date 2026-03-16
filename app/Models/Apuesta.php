@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Modelo Apuesta
  * Representa una apuesta realizada por un usuario en un evento deportivo
- * Calculo de ganancia: monto * cuota
+ *
+ * Formula de ganancia:
+ * ganancia = monto * cuota
+ *
+ * Estados posibles:
+ * - pendiente
+ * - ganada
+ * - perdida
+ * - cobrada
+ *
+ * Relaciones:
+ * - pertenece a un usuario
+ * - pertenece a un evento
  *
  * @author   Proyecto Apuestas Deportivas
  * @date     2026-03-16 01:25 COT
@@ -15,7 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Apuesta extends Model
 {
-    // Campos que se pueden llenar masivamente
+    /**
+     * Campos que se pueden llenar masivamente
+     */
     protected $fillable = [
         'usuario_id',
         'evento_id',
@@ -26,7 +40,9 @@ class Apuesta extends Model
         'ganancia',
     ];
 
-    // Formato de fecha: 2026-03-16 01:25 am
+    /**
+     * Formato personalizado para fechas del modelo
+     */
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i a');
@@ -48,3 +64,4 @@ class Apuesta extends Model
         return $this->belongsTo(Evento::class);
     }
 }
+
