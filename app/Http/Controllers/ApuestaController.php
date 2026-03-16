@@ -18,7 +18,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
  * Acciones del Admin:   ver todas las apuestas
  *
  * @author   Proyecto Apuestas Deportivas
- * @date     2026-03-16 03:00 COT
+ * @date     2026-03-16 05:30 COT
  * @version  1.0
  */
 class ApuestaController extends Controller
@@ -112,11 +112,16 @@ class ApuestaController extends Controller
         });
 
         // Enviar correo de confirmacion de apuesta al usuario
-        $this->enviarCorreo(
-            $user->email,
-            'Confirmacion de apuesta - Apuestas Deportivas',
-            "Tu apuesta ha sido registrada.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo: {$request->tipo_apuesta}\nMonto apostado: {$request->monto}\nGanancia potencial: {$ganancia_potencial}\n\nBuena suerte!"
-        );
+        // Si falla el correo, la apuesta igual queda registrada
+        try {
+            $this->enviarCorreo(
+                $user->email,
+                'Confirmacion de apuesta - Apuestas Deportivas',
+                "Tu apuesta ha sido registrada.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo: {$request->tipo_apuesta}\nMonto apostado: {$request->monto}\nGanancia potencial: {$ganancia_potencial}\n\nBuena suerte!"
+            );
+        } catch (\Exception $e) {
+            // El correo fallo pero la apuesta fue registrada correctamente
+        }
 
         return response()->json([
             'message'      => 'Apuesta realizada correctamente',
@@ -181,11 +186,16 @@ class ApuestaController extends Controller
         });
 
         // Enviar correo de confirmacion de cobro
-        $this->enviarCorreo(
-            $user->email,
-            'Cobro de ganancia - Apuestas Deportivas',
-            "Has cobrado tu apuesta ganada.\n\nGanancia acreditada: {$apuesta->ganancia}\nSaldo actual: {$user->saldo}\n\nGracias por usar Apuestas Deportivas!"
-        );
+        // Si falla el correo, el cobro igual se completa
+        try {
+            $this->enviarCorreo(
+                $user->email,
+                'Cobro de ganancia - Apuestas Deportivas',
+                "Has cobrado tu apuesta ganada.\n\nGanancia acreditada: {$apuesta->ganancia}\nSaldo actual: {$user->saldo}\n\nGracias por usar Apuestas Deportivas!"
+            );
+        } catch (\Exception $e) {
+            // El correo fallo pero el cobro fue exitoso
+        }
 
         return response()->json([
             'message'      => 'Ganancia cobrada correctamente',
@@ -205,5 +215,6 @@ class ApuestaController extends Controller
         return response()->json($apuestas);
     }
 }
+
 
 
