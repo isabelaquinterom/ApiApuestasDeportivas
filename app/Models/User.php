@@ -7,7 +7,12 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
  * Modelo User
- * Representa a los usuarios del sistema (admin y usuario)
+ * Representa a los usuarios del sistema
+ *
+ * Tipos de usuario:
+ * - admin
+ * - usuario
+ *
  * Implementa JWTSubject para poder generar tokens JWT
  *
  * @author   Proyecto Apuestas Deportivas
@@ -16,7 +21,9 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    // Campos que se pueden llenar masivamente
+    /**
+     * Campos que se pueden llenar masivamente
+     */
     protected $fillable = [
         'nombre',
         'email',
@@ -27,14 +34,26 @@ class User extends Authenticatable implements JWTSubject
         'otp_expiration',
     ];
 
-    // Campos que NO se muestran en las respuestas JSON por seguridad
+    /**
+     * Campos que no deben mostrarse en respuestas JSON
+     */
     protected $hidden = [
         'password',
         'otp_code',
         'otp_expiration',
     ];
 
-    // Formato de fecha: 2026-03-16 01:25 am
+    /**
+     * Casts del modelo
+     * Convierte otp_expiration automaticamente en fecha
+     */
+    protected $casts = [
+        'otp_expiration' => 'datetime',
+    ];
+
+    /**
+     * Formato personalizado para las fechas del modelo
+     */
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i a');
@@ -51,7 +70,7 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Metodo requerido por JWT
-     * Retorna claims adicionales para el token (vacio en este caso)
+     * Retorna claims adicionales para el token
      */
     public function getJWTCustomClaims()
     {
@@ -66,4 +85,5 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Apuesta::class, 'usuario_id');
     }
 }
+
 
