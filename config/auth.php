@@ -37,12 +37,18 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+   'guards' => [
+    'web' => [
+        'driver'   => 'session',
+        'provider' => 'users',
     ],
+    // Guard API usa JWT para autenticar las peticiones
+    'api' => [
+        'driver'   => 'jwt',
+        'provider' => 'users',
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------

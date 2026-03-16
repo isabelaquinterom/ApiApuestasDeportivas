@@ -2,58 +2,62 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+/**
+ * Modelo User
+ * Representa a los usuarios del sistema (admin y usuario)
+ * Implementa JWTSubject para poder generar tokens JWT
+ *
+ * @isabela  Proyecto Apuestas Deportivas
+ * @date     2026-03-15 23:44 COT
+ * @version  1.0
+ */
+class User extends Authenticatable implements JWTSubject
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     */
+    // Campos que se pueden llenar masivamente
     protected $fillable = [
-        'name',
+        'nombre',
         'email',
         'password',
+        'saldo',
+        'rol',
+        'otp_code',
+        'otp_expiration',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     */
+    // Campos que NO se muestran en las respuestas JSON por seguridad
     protected $hidden = [
         'password',
-        'remember_token',
+        'otp_code',
+        'otp_expiration',
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Metodo requerido por JWT
+     * Retorna el identificador unico del usuario para el token
      */
-    protected function casts(): array
+    public function getJWTIdentifier()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->getKey();
     }
 
     /**
-     * Un usuario puede realizar muchas apuestas
+     * Metodo requerido por JWT
+     * Retorna claims adicionales para el token (vacio en este caso)
      */
-    public function bets()
+    public function getJWTCustomClaims()
     {
-        return $this->hasMany(Bet::class);
+        return [];
     }
 
     /**
-     * Un usuario puede tener muchas transacciones
+     * Relacion: un usuario tiene muchas apuestas
      */
-    public function transactions()
+    public function apuestas()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Apuesta::class, 'usuario_id');
     }
 }
 
