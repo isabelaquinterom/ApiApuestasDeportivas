@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\ApuestaController;
 
 /**
  * Rutas de la API
@@ -10,8 +11,9 @@ use App\Http\Controllers\EventoController;
  * Rutas publicas:   No requieren token JWT
  * Rutas privadas:   Requieren header Authorization: Bearer TOKEN
  * Rutas de admin:   Requieren token JWT con rol admin
+ * Rutas de usuario: Requieren token JWT con rol usuario
  *
- * @isabela  Proyecto Apuestas Deportivas
+ * @author   Proyecto Apuestas Deportivas
  * @date     2026-03-15 23:44 COT
  * @version  1.0
  */
@@ -36,10 +38,19 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/eventos',      [EventoController::class, 'listar']); // Listar todos los eventos
     Route::get('/eventos/{id}', [EventoController::class, 'ver']);    // Ver un evento especifico
 
+    // --- Apuestas (solo usuarios) ---
+    Route::middleware(['rol:usuario'])->group(function () {
+        Route::post('/apuestas',             [ApuestaController::class, 'apostar']);     // Realizar apuesta
+        Route::get('/apuestas/mis',          [ApuestaController::class, 'misApuestas']); // Ver mis apuestas
+        Route::post('/apuestas/{id}/cobrar', [ApuestaController::class, 'cobrar']);      // Cobrar apuesta ganada
+    });
+
     // ==========================================
     // RUTAS SOLO PARA ADMIN
     // ==========================================
     Route::middleware(['rol:admin'])->group(function () {
-        Route::post('/eventos', [EventoController::class, 'crear']); // Crear evento con cuotas
+        Route::post('/eventos',          [EventoController::class, 'crear']);          // Crear evento con cuotas
+        Route::get('/admin/apuestas',    [ApuestaController::class, 'todasLasApuestas']); // Ver todas las apuestas
     });
 });
+
