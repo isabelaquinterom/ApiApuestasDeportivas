@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ApuestaController;
+use App\Http\Controllers\AdminController;
 
 /**
  * Rutas de la API
@@ -40,17 +41,29 @@ Route::middleware(['jwt.auth'])->group(function () {
 
     // --- Apuestas (solo usuarios) ---
     Route::middleware(['rol:usuario'])->group(function () {
-        Route::post('/apuestas',             [ApuestaController::class, 'apostar']);     // Realizar apuesta
-        Route::get('/apuestas/mis',          [ApuestaController::class, 'misApuestas']); // Ver mis apuestas
-        Route::post('/apuestas/{id}/cobrar', [ApuestaController::class, 'cobrar']);      // Cobrar apuesta ganada
+        Route::post('/apuestas',             [ApuestaController::class, 'apostar']);      // Realizar apuesta
+        Route::get('/apuestas/mis',          [ApuestaController::class, 'misApuestas']);  // Ver mis apuestas
+        Route::post('/apuestas/{id}/cobrar', [ApuestaController::class, 'cobrar']);       // Cobrar apuesta ganada
     });
 
     // ==========================================
     // RUTAS SOLO PARA ADMIN
     // ==========================================
     Route::middleware(['rol:admin'])->group(function () {
-        Route::post('/eventos',          [EventoController::class, 'crear']);          // Crear evento con cuotas
-        Route::get('/admin/apuestas',    [ApuestaController::class, 'todasLasApuestas']); // Ver todas las apuestas
+
+        // Eventos
+        Route::post('/eventos',                    [EventoController::class,  'crear']);            // Crear evento con cuotas
+
+        // Resultados
+        Route::post('/eventos/{id}/resultado',     [AdminController::class,   'simularResultado']); // Simular resultado
+
+        // Usuarios
+        Route::get('/admin/usuarios',              [AdminController::class,   'listarUsuarios']);   // Ver todos los usuarios
+        Route::put('/admin/usuarios/{id}/saldo',   [AdminController::class,   'ajustarSaldo']);     // Ajustar saldo de usuario
+
+        // Apuestas
+        Route::get('/admin/apuestas',              [ApuestaController::class, 'todasLasApuestas']); // Ver todas las apuestas
     });
 });
+
 
