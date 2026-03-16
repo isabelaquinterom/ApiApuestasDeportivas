@@ -7,63 +7,141 @@ use App\Http\Controllers\ApuestaController;
 use App\Http\Controllers\AdminController;
 
 /**
- * Rutas de la API
+ * Rutas principales de la API
  *
- * Rutas publicas:   No requieren token JWT
- * Rutas privadas:   Requieren header Authorization: Bearer TOKEN
- * Rutas de admin:   Requieren token JWT con rol admin
- * Rutas de usuario: Requieren token JWT con rol usuario
+ * Estructura general:
+ * - Rutas publicas
+ * - Rutas protegidas con JWT
+ * - Rutas de usuario
+ * - Rutas de administrador
+ *
+ * Seguridad:
+ * - jwt.auth -> valida token JWT
+ * - rol:usuario -> solo usuarios normales
+ * - rol:admin -> solo administradores
  *
  * @author   Proyecto Apuestas Deportivas
  * @date     2026-03-15 23:44 COT
  * @version  1.0
  */
 
-// ==========================================
-// RUTAS PUBLICAS - No requieren token JWT
-// ==========================================
-Route::post('/register',   [AuthController::class, 'register']);   // Registro de usuario
-Route::post('/login',      [AuthController::class, 'login']);      // Login paso 1 - envia OTP
-Route::post('/verify-otp', [AuthController::class, 'verifyOtp']); // Login paso 2 - verifica OTP y entrega JWT
+/*
+|--------------------------------------------------------------------------
+| RUTAS PUBLICAS
+|--------------------------------------------------------------------------
+| No requieren token JWT
+|--------------------------------------------------------------------------
+*/
 
-// ==========================================
-// RUTAS PROTEGIDAS - Requieren token JWT valido
-// ==========================================
+// Registro de usuario
+Route::post('/register', [AuthController::class, 'register']);
+
+// Login paso 1: valida credenciales y envia OTP
+Route::post('/login', [AuthController::class, 'login']);
+
+// Login paso 2: verifica OTP y entrega JWT
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+
+
+/*
+|--------------------------------------------------------------------------
+| RUTAS PROTEGIDAS
+|--------------------------------------------------------------------------
+| Requieren token JWT valido
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['jwt.auth'])->group(function () {
 
-    // --- Autenticacion ---
-    Route::post('/logout', [AuthController::class, 'logout']); // Cerrar sesion
-    Route::get('/me',      [AuthController::class, 'me']);     // Ver perfil propio
+    /*
+    |--------------------------------------------------------------------------
+    | AUTENTICACION
+    |--------------------------------------------------------------------------
+    */
 
-    // --- Eventos (cualquier usuario autenticado puede verlos) ---
-    Route::get('/eventos',      [EventoController::class, 'listar']); // Listar todos los eventos
-    Route::get('/eventos/{id}', [EventoController::class, 'ver']);    // Ver un evento especifico
+    // Cerrar sesion
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-    // --- Apuestas (solo usuarios) ---
+    // Ver perfil del usuario autenticado
+    Route::get('/me', [AuthController::class, 'me']);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVENTOS
+    |--------------------------------------------------------------------------
+    | Cualquier usuario autenticado puede ver eventos
+    |--------------------------------------------------------------------------
+    */
+
+    // Listar todos los eventos
+    Route::get('/eventos', [EventoController::class, 'listar']);
+
+    // Ver detalle de un evento
+    Route::get('/eventos/{id}', [EventoController::class, 'ver']);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RUTAS SOLO PARA USUARIO
+    |--------------------------------------------------------------------------
+    */
     Route::middleware(['rol:usuario'])->group(function () {
-        Route::post('/apuestas',             [ApuestaController::class, 'apostar']);      // Realizar apuesta
-        Route::get('/apuestas/mis',          [ApuestaController::class, 'misApuestas']);  // Ver mis apuestas
-        Route::post('/apuestas/{id}/cobrar', [ApuestaController::class, 'cobrar']);       // Cobrar apuesta ganada
+
+        // Realizar una apuesta
+        Route::post('/apuestas', [ApuestaController::class, 'apostar']);
+
+        // Ver mis apuestas
+        Route::get('/apuestas/mis', [ApuestaController::class, 'misApuestas']);
+
+        // Cobrar una apuesta ganada
+        Route::post('/apuestas/{id}/cobrar', [ApuestaController::class, 'cobrar']);
     });
 
-    // ==========================================
-    // RUTAS SOLO PARA ADMIN
-    // ==========================================
+
+    /*
+    |--------------------------------------------------------------------------
+    | RUTAS SOLO PARA ADMIN
+    |--------------------------------------------------------------------------
+    */
     Route::middleware(['rol:admin'])->group(function () {
 
-        // Eventos
-        Route::post('/eventos',                    [EventoController::class,  'crear']);            // Crear evento con cuotas
+        /*
+        |--------------------------------------------------------------------------
+        | EVENTOS
+        |--------------------------------------------------------------------------
+        */
 
-        // Resultados
-        Route::post('/eventos/{id}/resultado',     [AdminController::class,   'simularResultado']); // Simular resultado
+        // Crear evento con sus cuotas
+        Route::post('/eventos', [EventoController::class, 'crear']);
 
-        // Usuarios
-        Route::get('/admin/usuarios',              [AdminController::class,   'listarUsuarios']);   // Ver todos los usuarios
-        Route::put('/admin/usuarios/{id}/saldo',   [AdminController::class,   'ajustarSaldo']);     // Ajustar saldo de usuario
+        /*
+        |--------------------------------------------------------------------------
+        | RESULTADOS
+        |--------------------------------------------------------------------------
+        */
 
-        // Apuestas
-        Route::get('/admin/apuestas',              [ApuestaController::class, 'todasLasApuestas']); // Ver todas las apuestas
+        // Simular resultado de un evento
+        Route::post('/eventos/{id}/resultado', [AdminController::class, 'simularResultado']);
+
+        /*
+        |--------------------------------------------------------------------------
+        | USUARIOS
+        |--------------------------------------------------------------------------
+        */
+
+        // Ver todos los usuarios
+        Route::get('/admin/usuarios', [AdminController::class, 'listarUsuarios']);
+
+        // Ajustar saldo de un usuario
+        Route::put('/admin/usuarios/{id}/saldo', [AdminController::class, 'ajustarSaldo']);
+
+        /*
+        |--------------------------------------------------------------------------
+        | APUESTAS
+        |--------------------------------------------------------------------------
+        */
+
+        // Ver todas las apuestas del sistema
+        Route::get('/admin/apuestas', [ApuestaController::class, 'todasLasApuestas']);
     });
 });
-
-
