@@ -18,7 +18,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
  * Acciones del Admin:   ver todas las apuestas
  *
  * @author   Proyecto Apuestas Deportivas
- * @date     2026-03-16 05:30 COT
+ * @date     2026-03-16 09:30 COT
  * @version  1.0
  */
 class ApuestaController extends Controller
@@ -111,7 +111,7 @@ class ApuestaController extends Controller
             return $apuesta;
         });
 
-        // Enviar correo de confirmacion de apuesta al usuario
+        // Enviar correo FUERA de la transaccion
         // Si falla el correo, la apuesta igual queda registrada
         try {
             $this->enviarCorreo(
@@ -185,7 +185,7 @@ class ApuestaController extends Controller
             $apuesta->save();
         });
 
-        // Enviar correo de confirmacion de cobro
+        // Enviar correo FUERA de la transaccion
         // Si falla el correo, el cobro igual se completa
         try {
             $this->enviarCorreo(
@@ -215,6 +215,3 @@ class ApuestaController extends Controller
         return response()->json($apuestas);
     }
 }
-
-
-
