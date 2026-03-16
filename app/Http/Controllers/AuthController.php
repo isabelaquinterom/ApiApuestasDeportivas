@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use Carbon\Carbon;
 
@@ -15,7 +14,7 @@ use Carbon\Carbon;
  * Flujo de login: credenciales -> OTP por correo -> JWT
  *
  * @author   Proyecto Apuestas Deportivas
- * @date     2026-03-15 23:44 COT
+ * @date     2026-03-16 02:00 COT
  * @version  1.0
  */
 class AuthController extends Controller
@@ -78,11 +77,32 @@ class AuthController extends Controller
         $user->otp_expiration = Carbon::now()->addMinutes(5);
         $user->save();
 
-        // Enviar OTP por correo al usuario via SMTP
-        Mail::raw("Tu codigo de verificacion es: $otp \nEste codigo expira en 5 minutos.", function ($message) use ($user) {
-            $message->to($user->email)
-                    ->subject('Codigo de verificacion - Apuestas Deportivas');
-        });
+        // Enviar OTP por correo usando Symfony Mailer directamente
+        // Se usa este metodo para evitar problemas de SSL en Windows
+        $transport = new \Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport(
+    'smtp.gmail.com',
+    587,
+    false
+);
+         $transport->setUsername(env('MAIL_USERNAME'));
+         $transport->setPassword(env('MAIL_PASSWORD'));
+         $transport->getStream()->setStreamOptions([
+        'ssl' => [
+        'allow_self_signed' => true,
+        'verify_peer'       => false,
+        'verify_peer_name'  => false,
+    ]
+]);
+
+        $mailer = new \Symfony\Component\Mailer\Mailer($transport);
+
+        $email = (new \Symfony\Component\Mime\Email())
+            ->from(env('MAIL_FROM_ADDRESS'))
+            ->to($user->email)
+            ->subject('Codigo de verificacion - Apuestas Deportivas')
+            ->text("Tu codigo de verificacion es: $otp \nEste codigo expira en 5 minutos.");
+
+        $mailer->send($email);
 
         return response()->json([
             'message' => 'Codigo OTP enviado a tu correo. Expira en 5 minutos.'
@@ -163,4 +183,3 @@ class AuthController extends Controller
         return response()->json($user);
     }
 }
-
