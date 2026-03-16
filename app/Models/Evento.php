@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Modelo Evento
  * Representa un evento deportivo sobre el cual se pueden realizar apuestas
  *
- * @author   Proyecto Apuestas Deportivas
+ * @isabela   Proyecto Apuestas Deportivas
  * @date     2026-03-15 23:44 COT
  * @version  1.0
  */
