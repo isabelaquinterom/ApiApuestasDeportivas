@@ -13,9 +13,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $eventos = Event::all();
 
-        return response()->json($events);
+        return response()->json($eventos);
     }
 
     /**
@@ -23,16 +23,26 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event = Event::create([
-            'sport' => $request->sport,
-            'home_team' => $request->home_team,
-            'away_team' => $request->away_team,
-            'event_date' => $request->event_date,
-            'status' => 'ABIERTO',
+        $request->validate([
+            'deporte' => 'required|string|max:255',
+            'equipo_local' => 'required|string|max:255',
+            'equipo_visitante' => 'required|string|max:255',
+            'fecha_evento' => 'required|date',
+        ]);
+
+        $evento = Event::create([
+            'deporte' => $request->deporte,
+            'equipo_local' => $request->equipo_local,
+            'equipo_visitante' => $request->equipo_visitante,
+            'fecha_evento' => $request->fecha_evento,
+            'estado' => 'ABIERTO',
             'created_by' => 1
         ]);
 
-        return response()->json($event);
+        return response()->json([
+            'mensaje' => 'Evento creado correctamente',
+            'data' => $evento
+        ], 201);
     }
 
     /**
@@ -40,9 +50,9 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        $event = Event::findOrFail($id);
+        $evento = Event::findOrFail($id);
 
-        return response()->json($event);
+        return response()->json($evento);
     }
 }
 

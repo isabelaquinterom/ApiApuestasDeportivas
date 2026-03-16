@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     /**
-     * Campos que se pueden guardar desde la API
+     * Campos que se pueden guardar masivamente
      */
     protected $fillable = [
         'deporte',
@@ -42,4 +42,5 @@ class Event extends Model
         return $this->hasOne(Result::class);
     }
 }
+
 
