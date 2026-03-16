@@ -8,7 +8,6 @@ use App\Models\Resultado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Controlador de Administracion
@@ -17,11 +16,36 @@ use Illuminate\Support\Facades\Mail;
  * Acciones del Admin: simular resultados, ajustar saldo, ver usuarios
  *
  * @author   Proyecto Apuestas Deportivas
- * @date     2026-03-15 23:44 COT
+ * @date     2026-03-16 03:00 COT
  * @version  1.0
  */
 class AdminController extends Controller
 {
+    /**
+     * Metodo privado para enviar correos sin SSL verification
+     * Soluciona problema de certificados en Windows con Laravel
+     */
+    private function enviarCorreo($para, $asunto, $mensaje)
+    {
+        $transport = new \Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport('smtp.gmail.com', 587, false);
+        $transport->setUsername(env('MAIL_USERNAME'));
+        $transport->setPassword(env('MAIL_PASSWORD'));
+        $transport->getStream()->setStreamOptions([
+            'ssl' => [
+                'allow_self_signed' => true,
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
+            ]
+        ]);
+        $mailer = new \Symfony\Component\Mailer\Mailer($transport);
+        $email  = (new \Symfony\Component\Mime\Email())
+            ->from(env('MAIL_FROM_ADDRESS'))
+            ->to($para)
+            ->subject($asunto)
+            ->text($mensaje);
+        $mailer->send($email);
+    }
+
     /**
      * ADMIN - Simular el resultado de un evento
      * Procesa todas las apuestas pendientes del evento
@@ -49,7 +73,6 @@ class AdminController extends Controller
         }
 
         // Usar transaccion para procesar todas las apuestas atomicamente
-        // Si algo falla en el medio, todo se revierte
         DB::transaction(function () use ($evento, $request) {
 
             // Paso 1: Guardar el resultado del evento
@@ -70,7 +93,6 @@ class AdminController extends Controller
 
             // Paso 4: Procesar cada apuesta segun el resultado
             foreach ($apuestas as $apuesta) {
-
                 if ($apuesta->tipo_apuesta === $request->resultado) {
 
                     // La apuesta gano - marcarla como ganada
@@ -78,12 +100,10 @@ class AdminController extends Controller
                     $apuesta->save();
 
                     // Notificar al usuario que gano
-                    Mail::raw(
-                        "Felicitaciones! Tu apuesta ha ganado!\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nGanancia: {$apuesta->ganancia}\n\nPuedes cobrar tu ganancia desde la app.",
-                        function ($message) use ($apuesta) {
-                            $message->to($apuesta->usuario->email)
-                                    ->subject('Ganaste tu apuesta! - Apuestas Deportivas');
-                        }
+                    $this->enviarCorreo(
+                        $apuesta->usuario->email,
+                        'Ganaste tu apuesta! - Apuestas Deportivas',
+                        "Felicitaciones! Tu apuesta ha ganado!\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nGanancia: {$apuesta->ganancia}\n\nPuedes cobrar tu ganancia desde la app."
                     );
 
                 } else {
@@ -93,12 +113,10 @@ class AdminController extends Controller
                     $apuesta->save();
 
                     // Notificar al usuario que perdio
-                    Mail::raw(
-                        "Tu apuesta ha perdido.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nMonto apostado: {$apuesta->monto}\n\nSuerte en la proxima!",
-                        function ($message) use ($apuesta) {
-                            $message->to($apuesta->usuario->email)
-                                    ->subject('Resultado de tu apuesta - Apuestas Deportivas');
-                        }
+                    $this->enviarCorreo(
+                        $apuesta->usuario->email,
+                        'Resultado de tu apuesta - Apuestas Deportivas',
+                        "Tu apuesta ha perdido.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nMonto apostado: {$apuesta->monto}\n\nSuerte en la proxima!"
                     );
                 }
             }
@@ -113,24 +131,21 @@ class AdminController extends Controller
 
     /**
      * ADMIN - Ajustar el saldo de un usuario
-     * Permite al admin agregar o modificar el saldo de cualquier usuario
      * Endpoint: PUT /api/admin/usuarios/{id}/saldo
      */
     public function ajustarSaldo(Request $request, $id)
     {
-        // Validar que el saldo sea un numero positivo
         $request->validate([
             'saldo' => 'required|numeric|min:0',
         ]);
 
-        // Buscar el usuario
         $user = User::find($id);
 
         if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        // Guardar el saldo anterior para mostrarlo en la respuesta
+        // Guardar el saldo anterior
         $saldo_anterior = $user->saldo;
 
         // Actualizar el saldo del usuario
@@ -147,14 +162,13 @@ class AdminController extends Controller
 
     /**
      * ADMIN - Ver todos los usuarios registrados
-     * Retorna solo los usuarios con rol usuario (no admins)
      * Endpoint: GET /api/admin/usuarios
      */
     public function listarUsuarios()
     {
-        // Traer solo usuarios con rol usuario
         $usuarios = User::where('rol', 'usuario')->get();
         return response()->json($usuarios);
     }
 }
+
 

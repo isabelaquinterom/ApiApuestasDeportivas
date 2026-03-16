@@ -8,7 +8,6 @@ use App\Models\Cuota;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 /**
@@ -19,11 +18,36 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
  * Acciones del Admin:   ver todas las apuestas
  *
  * @author   Proyecto Apuestas Deportivas
- * @date     2026-03-15 23:44 COT
+ * @date     2026-03-16 03:00 COT
  * @version  1.0
  */
 class ApuestaController extends Controller
 {
+    /**
+     * Metodo privado para enviar correos sin SSL verification
+     * Soluciona problema de certificados en Windows con Laravel
+     */
+    private function enviarCorreo($para, $asunto, $mensaje)
+    {
+        $transport = new \Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport('smtp.gmail.com', 587, false);
+        $transport->setUsername(env('MAIL_USERNAME'));
+        $transport->setPassword(env('MAIL_PASSWORD'));
+        $transport->getStream()->setStreamOptions([
+            'ssl' => [
+                'allow_self_signed' => true,
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
+            ]
+        ]);
+        $mailer = new \Symfony\Component\Mailer\Mailer($transport);
+        $email  = (new \Symfony\Component\Mime\Email())
+            ->from(env('MAIL_FROM_ADDRESS'))
+            ->to($para)
+            ->subject($asunto)
+            ->text($mensaje);
+        $mailer->send($email);
+    }
+
     /**
      * USUARIO - Realizar una apuesta en un evento
      * Usa transaccion para descontar saldo y registrar apuesta juntos
@@ -88,12 +112,10 @@ class ApuestaController extends Controller
         });
 
         // Enviar correo de confirmacion de apuesta al usuario
-        Mail::raw(
-            "Tu apuesta ha sido registrada.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo: {$request->tipo_apuesta}\nMonto apostado: {$request->monto}\nGanancia potencial: {$ganancia_potencial}\n\nBuena suerte!",
-            function ($message) use ($user) {
-                $message->to($user->email)
-                        ->subject('Confirmacion de apuesta - Apuestas Deportivas');
-            }
+        $this->enviarCorreo(
+            $user->email,
+            'Confirmacion de apuesta - Apuestas Deportivas',
+            "Tu apuesta ha sido registrada.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo: {$request->tipo_apuesta}\nMonto apostado: {$request->monto}\nGanancia potencial: {$ganancia_potencial}\n\nBuena suerte!"
         );
 
         return response()->json([
@@ -159,12 +181,10 @@ class ApuestaController extends Controller
         });
 
         // Enviar correo de confirmacion de cobro
-        Mail::raw(
-            "Has cobrado tu apuesta ganada.\n\nGanancia acreditada: {$apuesta->ganancia}\nSaldo actual: {$user->saldo}\n\nGracias por usar Apuestas Deportivas!",
-            function ($message) use ($user) {
-                $message->to($user->email)
-                        ->subject('Cobro de ganancia - Apuestas Deportivas');
-            }
+        $this->enviarCorreo(
+            $user->email,
+            'Cobro de ganancia - Apuestas Deportivas',
+            "Has cobrado tu apuesta ganada.\n\nGanancia acreditada: {$apuesta->ganancia}\nSaldo actual: {$user->saldo}\n\nGracias por usar Apuestas Deportivas!"
         );
 
         return response()->json([
@@ -185,4 +205,5 @@ class ApuestaController extends Controller
         return response()->json($apuestas);
     }
 }
+
 
