@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     /**
+     * Campos que se pueden guardar desde la API
+     */
+    protected $fillable = [
+        'deporte',
+        'equipo_local',
+        'equipo_visitante',
+        'fecha_evento',
+        'estado',
+        'created_by',
+    ];
+
+    /**
      * Un evento puede tener muchas cuotas
      */
     public function odds()
@@ -30,3 +42,4 @@ class Event extends Model
         return $this->hasOne(Result::class);
     }
 }
+

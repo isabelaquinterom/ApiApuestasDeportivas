@@ -4,65 +4,60 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// Esta migracion crea la tabla "events".
-// En esta tabla se guardaran los eventos deportivos
-// sobre los cuales los usuarios podran hacer apuestas.
+// Esta migracion crea la tabla events
+// Aqui se guardan los eventos deportivos sobre los cuales los usuarios pueden apostar
 
 return new class extends Migration
 {
     /**
-     * Ejecuta la migracion.
-     * Aqui definimos la estructura de la tabla events.
+     * Ejecuta la migracion
      */
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
 
-            // ID principal del evento.
-            // Es la clave primaria autoincremental.
+            // ID principal del evento
             $table->id();
 
-            // Deporte del evento.
-            // Ejemplo: Football, Basketball, Tennis
-            $table->string('sport');
+            // Deporte del evento
+            // Ejemplo: Futbol, Baloncesto, Tenis
+            $table->string('deporte');
 
             // Equipo local
-            // Ejemplo: Barcelona
-            $table->string('home_team');
+            $table->string('equipo_local');
 
             // Equipo visitante
-            // Ejemplo: Real Madrid
-            $table->string('away_team');
+            $table->string('equipo_visitante');
 
             // Fecha y hora del evento deportivo
-            $table->dateTime('event_date');
+            $table->dateTime('fecha_evento');
 
             // Estado del evento
-            // OPEN -> evento abierto para apuestas
-            // CLOSED -> apuestas cerradas
-            // FINISHED -> evento terminado
-            $table->enum('status', ['OPEN', 'CLOSED', 'FINISHED'])
-                  ->default('OPEN');
+            // ABIERTO -> acepta apuestas
+            // CERRADO -> ya no acepta apuestas
+            // FINALIZADO -> evento terminado
+            $table->enum('estado', [
+                'ABIERTO',
+                'CERRADO',
+                'FINALIZADO'
+            ])->default('ABIERTO');
 
             // Usuario que creo el evento
-            // Se relaciona con la tabla users
             $table->foreignId('created_by')
                   ->constrained('users')
                   ->cascadeOnDelete();
 
-            // Campos automaticos de Laravel
-            // created_at -> fecha de creacion
-            // updated_at -> fecha de actualizacion
+            // Fechas automaticas de Laravel
             $table->timestamps();
         });
     }
 
     /**
      * Revierte la migracion
-     * Elimina la tabla events si se hace rollback
      */
     public function down(): void
     {
         Schema::dropIfExists('events');
     }
 };
+
