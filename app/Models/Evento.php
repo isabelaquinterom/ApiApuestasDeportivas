@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
  * Modelo Evento
  * Representa un evento deportivo sobre el cual se pueden realizar apuestas
  *
- * @isabela   Proyecto Apuestas Deportivas
- * @date     2026-03-15 23:44 COT
+ * @author   Proyecto Apuestas Deportivas
+ * @date     2026-03-16 01:25 COT
  * @version  1.0
  */
 class Evento extends Model
@@ -22,6 +22,12 @@ class Evento extends Model
         'fecha',
         'estado',
     ];
+
+    // Formato de fecha: 2026-03-16 01:25 am
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d h:i a');
+    }
 
     /**
      * Relacion: un evento tiene muchas cuotas (local, empate, visitante)

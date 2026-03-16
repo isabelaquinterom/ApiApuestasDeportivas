@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * Representa el resultado final de un evento deportivo
  * Es registrado por el administrador para procesar las apuestas
  *
- * @aisabela  Proyecto Apuestas Deportivas
- * @date     2026-03-15 23:44 COT
+ * @author   Proyecto Apuestas Deportivas
+ * @date     2026-03-16 01:25 COT
  * @version  1.0
  */
 class Resultado extends Model
@@ -20,6 +20,12 @@ class Resultado extends Model
         'evento_id',
         'resultado',
     ];
+
+    // Formato de fecha: 2026-03-16 01:25 am
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d h:i a');
+    }
 
     /**
      * Relacion: un resultado pertenece a un evento
