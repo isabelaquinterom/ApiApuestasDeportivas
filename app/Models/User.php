@@ -3,8 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 /**
  * Modelo User
  * Representa a los usuarios del sistema (admin y usuario)

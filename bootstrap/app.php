@@ -24,11 +24,11 @@ return Application::configure(basePath: dirname(__DIR__))
             // Middleware para verificar el rol del usuario (admin o usuario)
             'rol'      => \App\Http\Middleware\VerificarRol::class,
             // Middleware de JWT para proteger rutas que requieren autenticacion
-            'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+            'jwt.auth' => \PHPOpenSourceSaver\JWTAuth\Http\Middleware\Authenticate::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
-    
+
 
