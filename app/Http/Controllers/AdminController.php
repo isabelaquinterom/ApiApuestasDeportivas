@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
  * Acciones del Admin: simular resultados, ajustar saldo, ver usuarios
  *
  * @author   Proyecto Apuestas Deportivas
- * @date     2026-03-16 03:00 COT
+ * @date     2026-03-16 05:30 COT
  * @version  1.0
  */
 class AdminController extends Controller
@@ -55,69 +55,67 @@ class AdminController extends Controller
      */
     public function simularResultado(Request $request, $id)
     {
-        // Validar que el resultado sea uno de los valores permitidos
         $request->validate([
             'resultado' => 'required|in:local,empate,visitante',
         ]);
 
-        // Buscar el evento
         $evento = Evento::find($id);
 
         if (!$evento) {
             return response()->json(['message' => 'Evento no encontrado'], 404);
         }
 
-        // Verificar que el evento no haya sido finalizado antes
         if ($evento->estado === 'finalizado') {
             return response()->json(['message' => 'Este evento ya fue finalizado'], 400);
         }
 
-        // Usar transaccion para procesar todas las apuestas atomicamente
         DB::transaction(function () use ($evento, $request) {
 
-            // Paso 1: Guardar el resultado del evento
             Resultado::create([
                 'evento_id' => $evento->id,
                 'resultado' => $request->resultado,
             ]);
 
-            // Paso 2: Marcar el evento como finalizado
             $evento->estado = 'finalizado';
             $evento->save();
 
-            // Paso 3: Obtener todas las apuestas pendientes de este evento
             $apuestas = Apuesta::where('evento_id', $evento->id)
                                 ->where('estado', 'pendiente')
                                 ->with('usuario')
                                 ->get();
 
-            // Paso 4: Procesar cada apuesta segun el resultado
             foreach ($apuestas as $apuesta) {
                 if ($apuesta->tipo_apuesta === $request->resultado) {
 
-                    // La apuesta gano - marcarla como ganada
                     $apuesta->estado = 'ganada';
                     $apuesta->save();
 
-                    // Notificar al usuario que gano
-                    $this->enviarCorreo(
-                        $apuesta->usuario->email,
-                        'Ganaste tu apuesta! - Apuestas Deportivas',
-                        "Felicitaciones! Tu apuesta ha ganado!\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nGanancia: {$apuesta->ganancia}\n\nPuedes cobrar tu ganancia desde la app."
-                    );
+                    // Si falla el correo, el resultado igual se procesa
+                    try {
+                        $this->enviarCorreo(
+                            $apuesta->usuario->email,
+                            'Ganaste tu apuesta! - Apuestas Deportivas',
+                            "Felicitaciones! Tu apuesta ha ganado!\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nGanancia: {$apuesta->ganancia}\n\nPuedes cobrar tu ganancia desde la app."
+                        );
+                    } catch (\Exception $e) {
+                        // El correo fallo pero el resultado fue procesado
+                    }
 
                 } else {
 
-                    // La apuesta perdio - marcarla como perdida
                     $apuesta->estado = 'perdida';
                     $apuesta->save();
 
-                    // Notificar al usuario que perdio
-                    $this->enviarCorreo(
-                        $apuesta->usuario->email,
-                        'Resultado de tu apuesta - Apuestas Deportivas',
-                        "Tu apuesta ha perdido.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nMonto apostado: {$apuesta->monto}\n\nSuerte en la proxima!"
-                    );
+                    // Si falla el correo, el resultado igual se procesa
+                    try {
+                        $this->enviarCorreo(
+                            $apuesta->usuario->email,
+                            'Resultado de tu apuesta - Apuestas Deportivas',
+                            "Tu apuesta ha perdido.\n\nEvento: {$evento->equipo_local} vs {$evento->equipo_visitante}\nTipo apostado: {$apuesta->tipo_apuesta}\nMonto apostado: {$apuesta->monto}\n\nSuerte en la proxima!"
+                        );
+                    } catch (\Exception $e) {
+                        // El correo fallo pero el resultado fue procesado
+                    }
                 }
             }
         });
@@ -145,11 +143,8 @@ class AdminController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        // Guardar el saldo anterior
         $saldo_anterior = $user->saldo;
-
-        // Actualizar el saldo del usuario
-        $user->saldo = $request->saldo;
+        $user->saldo    = $request->saldo;
         $user->save();
 
         return response()->json([
@@ -170,5 +165,3 @@ class AdminController extends Controller
         return response()->json($usuarios);
     }
 }
-
-
