@@ -1,59 +1,156 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ApiApuestasDeportivas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST desarrollada con laravel para gestionar un sistema de apuestas deportivas.
 
-## About Laravel
+Permite registrar usuarios, iniciar sesion, autenticarse con JWT Y OTP por correo, consultar eventos deportivos, realizar apuestas, cobrar ganancias y administar eventos y resultados 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
+## TECNOLOGIAS USADAS 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP
+- Laravel
+- JWT para autenticacion
+- MySQL
+- Postman para pruebas de la API
+- Laragon
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+----
 
-## Learning Laravel
+## FUNCIONALIDADES PRINCIPALES
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- Registro de usuarios 
+- Inicio de sesion con JWT
+- Autenticacion de doble factor (2FA) con OTP por correo
+- Consulta de eventos deportivos
+- Creacion de eventos con cuotas
+- Realizacion de apuestas
+- Consulta de apuestas realizadas
+- Cobro de apuestas ganadas
+- Simulacion de resultados 
+- Ajuste de saldo de usuario 
+- Gestion de eventos, apuestas y resultados por parte del administrador
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+----
+## ROLES DEL SISTEMA
 
-## Laravel Sponsors
+## Administrador 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Puede relizar las siguientes acciones:
 
-### Premium Partners
+- Crear eventos deportivos
+- Definir cuotas de apuestas 
+- Simular resultados de eventos
+- Ver todas las apuestas
+- Listar usuarios 
+- Ajustar saldo de usuarios 
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Usuario
 
-## Contributing
+Puede realizar las siguientes acciones:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Registrarse en el sistema
+- Iniciar sesion 
+- verificar OTP
+- Cosultar eventos deportivos 
+- Realizar apuestas 
+- Consultar sus apuestas 
+- Consultar su saldo
+- Cobrar apuestas ganadas
 
-## Code of Conduct
+----
+## INSTALACION
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Clonar el repositorio
 
-## Security Vulnerabilities
+```bash
+git clone https://github.com/TU_USUARIO/ApiApuestasDeportivas.git
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. Entrar a la carpeta del proyecto
+cd ApiApuestasDeportivas
 
-## License
+3. Instalar dependencias
+composer install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. Copiar el archivo de entorno
+cp .env.example .env
+
+5. Generar la clave de la aplicacion
+php artisan key:generate
+
+6. Configurar la base de datos en el archivo .env
+
+Debes configurar los datos de conexion a MySQL, por ejemplo:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=api_apuestas_deportivas
+DB_USERNAME=root
+DB_PASSWORD=
+
+7. Configurar el correo en el archivo .env
+
+Ejemplo:
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=tu_correo@gmail.com
+MAIL_PASSWORD=tu_password_de_aplicacion
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=tu_correo@gmail.com
+MAIL_FROM_NAME="Apuestas Deportivas"
+
+8. Ejecutar migraciones
+php artisan migrate
+
+9. Iniciar el servidor
+php artisan serve
+```
+
+## FLUJO DE AUTENTICACION 
+
+La Api utiliza autenticacion en dos pasos:
+1. El usuario envia correo y contraseña 
+2. El sistema valida credenciales 
+3. Se genera un codigo OTP
+4. El codigo OTP se envia al correo del usuario 
+5. EL usuario envia el OTP al endpint de verificacion
+6. Si el OTP es correcto, el sistema genera el token JWT
+---
+## DOCUMENTACION DE LA API
+
+## Documentacion de la API
+
+La coleccion de Postman del proyecto se encuentra en el siguiente archivo:
+
+- [ApiApuestasDeportivas.postman_collection.json](docs/ApiApuestasDeportivas.postman_collection.json)
+
+Este archivo puede importarse en Postman para probar todos los endpoints de la API.
+ 
+## AUTENTICACION DE ENDPINTS PROTEGIDOS 
+
+Despues de iniciar sesion y verificar el OTP, se debe enviar el token en los endpoints protegidos de esta forma 
+
+Authorization:Bearer TOKEN
+
+## BASE DE DATOS 
+
+Tablas principales del sistema 
+
+- Users
+- Eventos
+- Cuotas
+- Apuestas
+- Resultados 
+
+## Autora
+
+- Proyecto desarrollado por:
+
+ISABELA QUINTERO MURILLO 
+
+- Asignatura: 
+
+PROGRAMACION BACKEND 
+
