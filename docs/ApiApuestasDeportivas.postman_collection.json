@@ -1,0 +1,1994 @@
+{
+  "info": {
+    "_postman_id": "b275b065-2c11-4595-a0cb-cdb5099b192b",
+    "name": "ApiApuestasDeportivas",
+    "description": "Coleccion de pruebas para la API de apuestas deportivas.  \nIncluye endpoints de eventos, apuestas, autenticacion, resultados y transacciones.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52567642",
+    "_collection_link": "https://go.postman.co/collection/52567642-b275b065-2c11-4595-a0cb-cdb5099b192b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Eventos",
+      "item": [
+        {
+          "name": "Crear evento",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM3MjU3OTQsImV4cCI6MTc3MzgxMjE5NCwibmJmIjoxNzczNzI1Nzk0LCJqdGkiOiJsbDFnY0RQd2twRDluMjBKIiwic3ViIjoiMTMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.vVL7NVfbaHBVmwQAccGikYbrgVKmHlFv2Ip2f3Ctp_c",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"deporte\": \"Futbol\",\r\n  \"equipo_local\": \"Real Madrid\",\r\n  \"equipo_visitante\": \"Barcelona\",\r\n  \"fecha\": \"2026-03-20 20:00:00\",\r\n  \"cuota_local\": 1.8,\r\n  \"cuota_empate\": 2.5,\r\n  \"cuota_visitante\": 3.0\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "eventos"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201-Evento creado correctamente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NDk2MjYsImV4cCI6MTc3MzY1MzIyNiwibmJmIjoxNzczNjQ5NjI2LCJqdGkiOiJsNDJpQmVjRHZBdThQOGFVIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8Op5vkPQwGbSdYaCV5y_aKYbz-JRf_x0xlxiV0sE7pE",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"deporte\": \"Futbol\",\r\n    \"equipo_local\": \"Real Madrid\",\r\n    \"equipo_visitante\": \"Barcelona\",\r\n    \"fecha\": \"2026-06-10 20:00:00\",\r\n    \"cuota_local\": 1.8,\r\n    \"cuota_empate\": 3.2,\r\n    \"cuota_visitante\": 2.1\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/eventos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "eventos"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 08:45:30 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Evento creado correctamente\",\n    \"evento\": {\n        \"deporte\": \"Futbol\",\n        \"equipo_local\": \"Real Madrid\",\n        \"equipo_visitante\": \"Barcelona\",\n        \"fecha\": \"2026-06-10 20:00:00\",\n        \"estado\": \"pendiente\",\n        \"updated_at\": \"2026-03-16 03:45 am\",\n        \"created_at\": \"2026-03-16 03:45 am\",\n        \"id\": 1,\n        \"cuotas\": [\n            {\n                \"id\": 1,\n                \"evento_id\": 1,\n                \"tipo_apuesta\": \"local\",\n                \"cuota\": \"1.80\",\n                \"created_at\": \"2026-03-16 03:45 am\",\n                \"updated_at\": \"2026-03-16 03:45 am\"\n            },\n            {\n                \"id\": 2,\n                \"evento_id\": 1,\n                \"tipo_apuesta\": \"empate\",\n                \"cuota\": \"3.20\",\n                \"created_at\": \"2026-03-16 03:45 am\",\n                \"updated_at\": \"2026-03-16 03:45 am\"\n            },\n            {\n                \"id\": 3,\n                \"evento_id\": 1,\n                \"tipo_apuesta\": \"visitante\",\n                \"cuota\": \"2.10\",\n                \"created_at\": \"2026-03-16 03:45 am\",\n                \"updated_at\": \"2026-03-16 03:45 am\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "ListarEventos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NDk2MjYsImV4cCI6MTc3MzY1MzIyNiwibmJmIjoxNzczNjQ5NjI2LCJqdGkiOiJsNDJpQmVjRHZBdThQOGFVIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8Op5vkPQwGbSdYaCV5y_aKYbz-JRf_x0xlxiV0sE7pE",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"deporte\": \"Futbol\",\r\n    \"equipo_local\": \"Real Madrid\",\r\n    \"equipo_visitante\": \"Barcelona\",\r\n    \"fecha\": \"2026-06-10 20:00:00\",\r\n    \"cuota_local\": 1.8,\r\n    \"cuota_empate\": 3.2,\r\n    \"cuota_visitante\": 2.1\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "eventos"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200-lista de eventos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NDk2MjYsImV4cCI6MTc3MzY1MzIyNiwibmJmIjoxNzczNjQ5NjI2LCJqdGkiOiJsNDJpQmVjRHZBdThQOGFVIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8Op5vkPQwGbSdYaCV5y_aKYbz-JRf_x0xlxiV0sE7pE",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"deporte\": \"Futbol\",\r\n    \"equipo_local\": \"Real Madrid\",\r\n    \"equipo_visitante\": \"Barcelona\",\r\n    \"fecha\": \"2026-06-10 20:00:00\",\r\n    \"cuota_local\": 1.8,\r\n    \"cuota_empate\": 3.2,\r\n    \"cuota_visitante\": 2.1\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/eventos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "eventos"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 08:49:23 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 1,\n        \"deporte\": \"Futbol\",\n        \"equipo_local\": \"Real Madrid\",\n        \"equipo_visitante\": \"Barcelona\",\n        \"fecha\": \"2026-06-10 20:00:00\",\n        \"estado\": \"pendiente\",\n        \"created_at\": \"2026-03-16 03:45 am\",\n        \"updated_at\": \"2026-03-16 03:45 am\",\n        \"cuotas\": [\n            {\n                \"id\": 1,\n                \"evento_id\": 1,\n                \"tipo_apuesta\": \"local\",\n                \"cuota\": \"1.80\",\n                \"created_at\": \"2026-03-16 03:45 am\",\n                \"updated_at\": \"2026-03-16 03:45 am\"\n            },\n            {\n                \"id\": 2,\n                \"evento_id\": 1,\n                \"tipo_apuesta\": \"empate\",\n                \"cuota\": \"3.20\",\n                \"created_at\": \"2026-03-16 03:45 am\",\n                \"updated_at\": \"2026-03-16 03:45 am\"\n            },\n            {\n                \"id\": 3,\n                \"evento_id\": 1,\n                \"tipo_apuesta\": \"visitante\",\n                \"cuota\": \"2.10\",\n                \"created_at\": \"2026-03-16 03:45 am\",\n                \"updated_at\": \"2026-03-16 03:45 am\"\n            }\n        ]\n    },\n    {\n        \"id\": 2,\n        \"deporte\": \"Futbol\",\n        \"equipo_local\": \"Real Madrid\",\n        \"equipo_visitante\": \"Barcelona\",\n        \"fecha\": \"2026-06-10 20:00:00\",\n        \"estado\": \"pendiente\",\n        \"created_at\": \"2026-03-16 03:46 am\",\n        \"updated_at\": \"2026-03-16 03:46 am\",\n        \"cuotas\": [\n            {\n                \"id\": 4,\n                \"evento_id\": 2,\n                \"tipo_apuesta\": \"local\",\n                \"cuota\": \"1.80\",\n                \"created_at\": \"2026-03-16 03:46 am\",\n                \"updated_at\": \"2026-03-16 03:46 am\"\n            },\n            {\n                \"id\": 5,\n                \"evento_id\": 2,\n                \"tipo_apuesta\": \"empate\",\n                \"cuota\": \"3.20\",\n                \"created_at\": \"2026-03-16 03:46 am\",\n                \"updated_at\": \"2026-03-16 03:46 am\"\n            },\n            {\n                \"id\": 6,\n                \"evento_id\": 2,\n                \"tipo_apuesta\": \"visitante\",\n                \"cuota\": \"2.10\",\n                \"created_at\": \"2026-03-16 03:46 am\",\n                \"updated_at\": \"2026-03-16 03:46 am\"\n            }\n        ]\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Ver evento",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/eventos/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "eventos",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Apuestas",
+      "item": [
+        {
+          "name": "Realizar apuesta",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NzAxMjEsImV4cCI6MTc3MzY3MzcyMSwibmJmIjoxNzczNjcwMTIxLCJqdGkiOiJFRDFvTnFIYWtydVJQSXgyIiwic3ViIjoiMTEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.08yZFMMP6UeV3-NnAfvarO6LXw2lUwJzct_cL17iDME",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"evento_id\": 2,\r\n    \"tipo_apuesta\": \"local\",\r\n    \"monto\": 10000\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/apuestas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "apuestas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "400-saldo insuficiente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTI4NzUsImV4cCI6MTc3MzY1NjQ3NSwibmJmIjoxNzczNjUyODc1LCJqdGkiOiJ5NUw1aFZwdFBHMTFrMVJ5Iiwic3ViIjoiMTIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.JeCLyZ3vak4fvE1QmYGk6mBNq88B1kffC76_3a96MTc",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"evento_id\": 1,\r\n    \"tipo_apuesta\": \"local\",\r\n    \"monto\": 10000\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/apuestas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "apuestas"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 09:21:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Saldo insuficiente\"\n}"
+            },
+            {
+              "name": "201 apuesta realizada correctamente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTUwMjMsImV4cCI6MTc3MzY1ODYyMywibmJmIjoxNzczNjU1MDIzLCJqdGkiOiJlQ3RUZ1dGbEtESjZtdEp6Iiwic3ViIjoiMTIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.5t86HUOyOUMGbyZh2ieyLdaX77GD8imVoInoJCrqx2Y",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"evento_id\": 1,\r\n    \"tipo_apuesta\": \"local\",\r\n    \"monto\": 10000\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/apuestas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "apuestas"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 10:10:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Apuesta realizada correctamente\",\n    \"apuesta\": {\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": 10000,\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": 18000,\n        \"updated_at\": \"2026-03-16 05:09 am\",\n        \"created_at\": \"2026-03-16 05:09 am\",\n        \"id\": 5\n    },\n    \"saldo_actual\": 50000\n}"
+            }
+          ]
+        },
+        {
+          "name": "Mis apuestas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NzIxNjksImV4cCI6MTc3Mzc1ODU2OSwibmJmIjoxNzczNjcyMTY5LCJqdGkiOiJsQlNBMzZQWnpWWDVNRGVOIiwic3ViIjoiMTEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.FSNNHT59oYHO9UL005ixMBc_1aSxuojSswB1jA1K4DQ",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/apuestas/mis",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "apuestas",
+                "mis"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 vista de mis apuestas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTUwMjMsImV4cCI6MTc3MzY1ODYyMywibmJmIjoxNzczNjU1MDIzLCJqdGkiOiJlQ3RUZ1dGbEtESjZtdEp6Iiwic3ViIjoiMTIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.5t86HUOyOUMGbyZh2ieyLdaX77GD8imVoInoJCrqx2Y",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/apuestas/mis",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "apuestas",
+                    "mis"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 10:13:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 1,\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": \"10000.00\",\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": \"18000.00\",\n        \"created_at\": \"2026-03-16 04:47 am\",\n        \"updated_at\": \"2026-03-16 04:47 am\",\n        \"evento\": {\n            \"id\": 1,\n            \"deporte\": \"Futbol\",\n            \"equipo_local\": \"Real Madrid\",\n            \"equipo_visitante\": \"Barcelona\",\n            \"fecha\": \"2026-06-10 20:00:00\",\n            \"estado\": \"pendiente\",\n            \"created_at\": \"2026-03-16 03:45 am\",\n            \"updated_at\": \"2026-03-16 03:45 am\"\n        }\n    },\n    {\n        \"id\": 2,\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": \"10000.00\",\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": \"18000.00\",\n        \"created_at\": \"2026-03-16 04:58 am\",\n        \"updated_at\": \"2026-03-16 04:58 am\",\n        \"evento\": {\n            \"id\": 1,\n            \"deporte\": \"Futbol\",\n            \"equipo_local\": \"Real Madrid\",\n            \"equipo_visitante\": \"Barcelona\",\n            \"fecha\": \"2026-06-10 20:00:00\",\n            \"estado\": \"pendiente\",\n            \"created_at\": \"2026-03-16 03:45 am\",\n            \"updated_at\": \"2026-03-16 03:45 am\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": \"10000.00\",\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": \"18000.00\",\n        \"created_at\": \"2026-03-16 04:59 am\",\n        \"updated_at\": \"2026-03-16 04:59 am\",\n        \"evento\": {\n            \"id\": 1,\n            \"deporte\": \"Futbol\",\n            \"equipo_local\": \"Real Madrid\",\n            \"equipo_visitante\": \"Barcelona\",\n            \"fecha\": \"2026-06-10 20:00:00\",\n            \"estado\": \"pendiente\",\n            \"created_at\": \"2026-03-16 03:45 am\",\n            \"updated_at\": \"2026-03-16 03:45 am\"\n        }\n    },\n    {\n        \"id\": 4,\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": \"10000.00\",\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": \"18000.00\",\n        \"created_at\": \"2026-03-16 05:01 am\",\n        \"updated_at\": \"2026-03-16 05:01 am\",\n        \"evento\": {\n            \"id\": 1,\n            \"deporte\": \"Futbol\",\n            \"equipo_local\": \"Real Madrid\",\n            \"equipo_visitante\": \"Barcelona\",\n            \"fecha\": \"2026-06-10 20:00:00\",\n            \"estado\": \"pendiente\",\n            \"created_at\": \"2026-03-16 03:45 am\",\n            \"updated_at\": \"2026-03-16 03:45 am\"\n        }\n    },\n    {\n        \"id\": 5,\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": \"10000.00\",\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": \"18000.00\",\n        \"created_at\": \"2026-03-16 05:09 am\",\n        \"updated_at\": \"2026-03-16 05:09 am\",\n        \"evento\": {\n            \"id\": 1,\n            \"deporte\": \"Futbol\",\n            \"equipo_local\": \"Real Madrid\",\n            \"equipo_visitante\": \"Barcelona\",\n            \"fecha\": \"2026-06-10 20:00:00\",\n            \"estado\": \"pendiente\",\n            \"created_at\": \"2026-03-16 03:45 am\",\n            \"updated_at\": \"2026-03-16 03:45 am\"\n        }\n    },\n    {\n        \"id\": 6,\n        \"usuario_id\": 12,\n        \"evento_id\": 1,\n        \"tipo_apuesta\": \"local\",\n        \"monto\": \"10000.00\",\n        \"cuota\": \"1.80\",\n        \"estado\": \"pendiente\",\n        \"ganancia\": \"18000.00\",\n        \"created_at\": \"2026-03-16 05:10 am\",\n        \"updated_at\": \"2026-03-16 05:10 am\",\n        \"evento\": {\n            \"id\": 1,\n            \"deporte\": \"Futbol\",\n            \"equipo_local\": \"Real Madrid\",\n            \"equipo_visitante\": \"Barcelona\",\n            \"fecha\": \"2026-06-10 20:00:00\",\n            \"estado\": \"pendiente\",\n            \"created_at\": \"2026-03-16 03:45 am\",\n            \"updated_at\": \"2026-03-16 03:45 am\"\n        }\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Cobrar Apuesta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NzIxNjksImV4cCI6MTc3Mzc1ODU2OSwibmJmIjoxNzczNjcyMTY5LCJqdGkiOiJsQlNBMzZQWnpWWDVNRGVOIiwic3ViIjoiMTEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.FSNNHT59oYHO9UL005ixMBc_1aSxuojSswB1jA1K4DQ",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/apuestas/7/cobrar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "apuestas",
+                "7",
+                "cobrar"
+              ]
+            },
+            "description": "<img src=\"https://content.pstmn.io/86a1ab12-6f1e-485c-be7b-1a28bce29135/aW1hZ2UucG5n\" width=\"529\" height=\"502\">"
+          },
+          "response": [
+            {
+              "name": "200 ganancia cobrada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NzIxNjksImV4cCI6MTc3Mzc1ODU2OSwibmJmIjoxNzczNjcyMTY5LCJqdGkiOiJsQlNBMzZQWnpWWDVNRGVOIiwic3ViIjoiMTEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.FSNNHT59oYHO9UL005ixMBc_1aSxuojSswB1jA1K4DQ",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/apuestas/7/cobrar",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "apuestas",
+                    "7",
+                    "cobrar"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 17:07:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Ganancia cobrada correctamente\",\n    \"ganancia\": \"18000.00\",\n    \"saldo_actual\": 108000\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Ajustar saldo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTkwOTMsImV4cCI6MTc3MzY2MjY5MywibmJmIjoxNzczNjU5MDkzLCJqdGkiOiJMN0Vzb1ZSRmxsT0k4bmlYIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5LUaXP5Yjij18usCGkiK2jQJjX8eFYT8kc__eK2j79M",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"saldo\": 100000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/usuarios/11/saldo",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "usuarios",
+                "11",
+                "saldo"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200- saldo actualizado correctamente",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NDk2MjYsImV4cCI6MTc3MzY1MzIyNiwibmJmIjoxNzczNjQ5NjI2LCJqdGkiOiJsNDJpQmVjRHZBdThQOGFVIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8Op5vkPQwGbSdYaCV5y_aKYbz-JRf_x0xlxiV0sE7pE",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"saldo\": 100000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/admin/usuarios/1/saldo",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "usuarios",
+                    "1",
+                    "saldo"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 08:31:26 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Saldo actualizado correctamente\",\n    \"usuario\": \"Admin\",\n    \"saldo_anterior\": \"0.00\",\n    \"saldo_nuevo\": 100000\n}"
+            },
+            {
+              "name": "200-ajustar saldo",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTQwODYsImV4cCI6MTc3MzY1NzY4NiwibmJmIjoxNzczNjU0MDg3LCJqdGkiOiJWT2FTYTVFbDNMb0c4cjlYIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.V9WBFImmU19umzoXldboIEN5OAwGY0doWsMYBsaILzA",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"saldo\": 100000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/admin/usuarios/12/saldo",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "usuarios",
+                    "12",
+                    "saldo"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 09:45:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Saldo actualizado correctamente\",\n    \"usuario\": \"juan\",\n    \"saldo_anterior\": \"0.00\",\n    \"saldo_nuevo\": 100000\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTkwOTMsImV4cCI6MTc3MzY2MjY5MywibmJmIjoxNzczNjU5MDkzLCJqdGkiOiJMN0Vzb1ZSRmxsT0k4bmlYIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5LUaXP5Yjij18usCGkiK2jQJjX8eFYT8kc__eK2j79M",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "usuarios"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200- Lista Usuarios",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTQwODYsImV4cCI6MTc3MzY1NzY4NiwibmJmIjoxNzczNjU0MDg3LCJqdGkiOiJWT2FTYTVFbDNMb0c4cjlYIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.V9WBFImmU19umzoXldboIEN5OAwGY0doWsMYBsaILzA",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/admin/usuarios",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "usuarios"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 09:42:51 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 2,\n        \"nombre\": \"Juan Perez\",\n        \"email\": \"juan@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:17 am\",\n        \"updated_at\": \"2026-03-16 01:17 am\"\n    },\n    {\n        \"id\": 3,\n        \"nombre\": \"miguel villegas\",\n        \"email\": \"miguel1@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:24 am\",\n        \"updated_at\": \"2026-03-16 01:24 am\"\n    },\n    {\n        \"id\": 4,\n        \"nombre\": \"Ander lotero\",\n        \"email\": \"ander@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:35 am\",\n        \"updated_at\": \"2026-03-16 01:35 am\"\n    },\n    {\n        \"id\": 5,\n        \"nombre\": \"alejo lopez\",\n        \"email\": \"ale@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:36 am\",\n        \"updated_at\": \"2026-03-16 01:39 am\"\n    },\n    {\n        \"id\": 6,\n        \"nombre\": \"michel rivera\",\n        \"email\": \"mich09@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:44 am\",\n        \"updated_at\": \"2026-03-16 01:48 am\"\n    },\n    {\n        \"id\": 7,\n        \"nombre\": \"mapaz\",\n        \"email\": \"mapaz@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:49 am\",\n        \"updated_at\": \"2026-03-16 01:52 am\"\n    },\n    {\n        \"id\": 8,\n        \"nombre\": \"Hugo\",\n        \"email\": \"Hugo@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 01:56 am\",\n        \"updated_at\": \"2026-03-16 01:56 am\"\n    },\n    {\n        \"id\": 9,\n        \"nombre\": \"Martha\",\n        \"email\": \"marthaa@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 02:00 am\",\n        \"updated_at\": \"2026-03-16 02:17 am\"\n    },\n    {\n        \"id\": 10,\n        \"nombre\": \"luciana\",\n        \"email\": \"Luciana34@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 02:20 am\",\n        \"updated_at\": \"2026-03-16 02:30 am\"\n    },\n    {\n        \"id\": 11,\n        \"nombre\": \"Isa Quintero\",\n        \"email\": \"isaquinteromurillo1304@gmail.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 02:29 am\",\n        \"updated_at\": \"2026-03-16 02:29 am\"\n    },\n    {\n        \"id\": 12,\n        \"nombre\": \"juan\",\n        \"email\": \"juan23@test.com\",\n        \"saldo\": \"0.00\",\n        \"rol\": \"usuario\",\n        \"created_at\": \"2026-03-16 02:39 am\",\n        \"updated_at\": \"2026-03-16 04:21 am\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Todas las apuestas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/admin/apuestas",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "admin",
+                "apuestas"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Resultados",
+      "item": [
+        {
+          "name": "Simular resultado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NzA2OTIsImV4cCI6MTc3MzY3NDI5MiwibmJmIjoxNzczNjcwNjkyLCJqdGkiOiI5OFJ5dWFKVzBpeTNGTFpZIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LREb7ivYQ3JUGNuDlyK5Wh_hlhVlmSRC9TUKYX7w2nE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"resultado\": \"local\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/eventos/2/resultado",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "eventos",
+                "2",
+                "resultado"
+              ]
+            },
+            "description": "<img src=\"https://content.pstmn.io/be2449cc-8041-43c4-b394-d23e7dfd69f9/aW1hZ2UucG5n\" width=\"523\" height=\"323\">"
+          },
+          "response": [
+            {
+              "name": "200 resultado simulado y apuestas procesadas",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTYzOTksImV4cCI6MTc3MzY1OTk5OSwibmJmIjoxNzczNjU2Mzk5LCJqdGkiOiJJUnJoT1ltZDBEYW5aa0FxIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Pej9AJk-qD4OSZ-8J6sYN03Wfu3tRCRuXf7eOHKOpLk",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"resultado\": \"local\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/eventos/1/resultado",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "eventos",
+                    "1",
+                    "resultado"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 10:21:56 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Resultado simulado y apuestas procesadas correctamente\",\n    \"evento\": {\n        \"id\": 1,\n        \"deporte\": \"Futbol\",\n        \"equipo_local\": \"Real Madrid\",\n        \"equipo_visitante\": \"Barcelona\",\n        \"fecha\": \"2026-06-10 20:00:00\",\n        \"estado\": \"finalizado\",\n        \"created_at\": \"2026-03-16 03:45 am\",\n        \"updated_at\": \"2026-03-16 05:21 am\",\n        \"resultado\": {\n            \"id\": 1,\n            \"evento_id\": 1,\n            \"resultado\": \"local\",\n            \"created_at\": \"2026-03-16 05:21 am\",\n            \"updated_at\": \"2026-03-16 05:21 am\"\n        }\n    },\n    \"resultado\": \"local\"\n}"
+            },
+            {
+              "name": "Simular resultado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NzA2OTIsImV4cCI6MTc3MzY3NDI5MiwibmJmIjoxNzczNjcwNjkyLCJqdGkiOiI5OFJ5dWFKVzBpeTNGTFpZIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LREb7ivYQ3JUGNuDlyK5Wh_hlhVlmSRC9TUKYX7w2nE",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"resultado\": \"local\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/eventos/2/resultado",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "eventos",
+                    "2",
+                    "resultado"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 14:19:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Resultado simulado y apuestas procesadas correctamente\",\n    \"evento\": {\n        \"id\": 2,\n        \"deporte\": \"Futbol\",\n        \"equipo_local\": \"Real Madrid\",\n        \"equipo_visitante\": \"Barcelona\",\n        \"fecha\": \"2026-06-10 20:00:00\",\n        \"estado\": \"finalizado\",\n        \"created_at\": \"2026-03-16 03:46 am\",\n        \"updated_at\": \"2026-03-16 09:18 am\",\n        \"resultado\": {\n            \"id\": 2,\n            \"evento_id\": 2,\n            \"resultado\": \"local\",\n            \"created_at\": \"2026-03-16 09:18 am\",\n            \"updated_at\": \"2026-03-16 09:18 am\"\n        }\n    },\n    \"resultado\": \"local\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Autenticacion",
+      "item": [
+        {
+          "name": "Registro",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"juan\",\r\n    \"email\": \"juan23@test.com\",\r\n    \"password\": \"134566\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201-usuario registrado correctamente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nombre\": \"alejo lopez\",\r\n    \"email\": \"ale@test.com\",\r\n    \"password\": \"190721\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/register",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 06:36:17 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Usuario registrado correctamente\",\n    \"user\": {\n        \"nombre\": \"alejo lopez\",\n        \"email\": \"ale@test.com\",\n        \"saldo\": 0,\n        \"rol\": \"usuario\",\n        \"updated_at\": \"2026-03-16 01:36 am\",\n        \"created_at\": \"2026-03-16 01:36 am\",\n        \"id\": 5\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login Usuario",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"usuario_prueba@test.com\",\r\n  \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "login"
+              ]
+            },
+            "description": "<img src=\"https://content.pstmn.io/52bacec8-6be6-4132-83bd-58aabdbc1520/aW1hZ2UucG5n\" alt=\"\" height=\"648\" width=\"536\">"
+          },
+          "response": [
+            {
+              "name": "200 codigo otp enviado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"juan23@test.com\",\r\n    \"password\": \"134566\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 07:45:38 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Codigo OTP enviado a tu correo. Expira en 5 minutos.\"\n}"
+            },
+            {
+              "name": "Login Usuario",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"usuario_prueba@test.com\",\r\n  \"password\": \"123456\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 17 Mar 2026 04:42:07 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Codigo OTP enviado a tu correo. Expira en 5 minutos.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Verificar OTP Usuario",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@test.com\",\r\n  \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/verify-otp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "verify-otp"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200-login exitosos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"juan23@test.com\",\r\n    \"otp\": \"913374\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/verify-otp",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "verify-otp"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 07:49:30 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Login exitoso\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NDczNzAsImV4cCI6MTc3MzY1MDk3MCwibmJmIjoxNzczNjQ3MzcwLCJqdGkiOiJPb3djVDV1S2J6NENqVHZ3Iiwic3ViIjoiMTIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.jwyjYdIUGaE1JNFpJ7CtXpDBKRFNafbVFvj664zy0xs\",\n    \"user\": {\n        \"id\": 12,\n        \"nombre\": \"juan\",\n        \"email\": \"juan23@test.com\",\n        \"rol\": \"usuario\",\n        \"saldo\": \"0.00\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@test.com\",\r\n  \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 codigo otp enviado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"admin@apuestas.com\",\r\n    \"password\": \"admin123\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 07:55:09 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Codigo OTP enviado a tu correo. Expira en 5 minutos.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Verificar OTP  Admin",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"usuario_prueba@test.com\",\r\n  \"otp\": \"405868\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/verify-otp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "verify-otp"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login otp admin exitoso",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"isaquinteromurillo1304+admin@gmail.com\",\r\n    \"otp\": \"280956\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/verify-otp",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "verify-otp"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 16 Mar 2026 10:19:59 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Login exitoso\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM2NTYzOTksImV4cCI6MTc3MzY1OTk5OSwibmJmIjoxNzczNjU2Mzk5LCJqdGkiOiJJUnJoT1ltZDBEYW5aa0FxIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Pej9AJk-qD4OSZ-8J6sYN03Wfu3tRCRuXf7eOHKOpLk\",\n    \"user\": {\n        \"id\": 1,\n        \"nombre\": \"Admin\",\n        \"email\": \"isaquinteromurillo1304+admin@gmail.com\",\n        \"rol\": \"admin\",\n        \"saldo\": \"100000.00\"\n    }\n}"
+            },
+            {
+              "name": "login exitoso admin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"usuario_prueba@test.com\",\r\n  \"otp\": \"405868\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/verify-otp",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "verify-otp"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 17 Mar 2026 05:27:32 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Login exitoso\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM3MjUyNTEsImV4cCI6MTc3MzgxMTY1MSwibmJmIjoxNzczNzI1MjUxLCJqdGkiOiJYbFpydHJ0RURRNEVpVjR1Iiwic3ViIjoiMTMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.I44-re980Hk38rkbx44J9QNbiFUZa5GKpyNO9FDpbGE\",\n    \"user\": {\n        \"id\": 13,\n        \"nombre\": \"Usuario Prueba\",\n        \"email\": \"usuario_prueba@test.com\",\n        \"rol\": \"usuario\",\n        \"saldo\": \"0.00\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Mi perfil",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM3MjQwOTEsImV4cCI6MTc3MzgxMDQ5MSwibmJmIjoxNzczNzI0MDkxLCJqdGkiOiJhanlLMGNlT1ZaUHFnd21EIiwic3ViIjoiMTMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.NciXFuwWXqUB7hdjWQ3HQuecLPqRfyzecJ0Mcqdo7jQ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/me",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "me"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200-perfil del usuario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZlcmlmeS1vdHAiLCJpYXQiOjE3NzM3MjQwOTEsImV4cCI6MTc3MzgxMDQ5MSwibmJmIjoxNzczNzI0MDkxLCJqdGkiOiJhanlLMGNlT1ZaUHFnd21EIiwic3ViIjoiMTMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.NciXFuwWXqUB7hdjWQ3HQuecLPqRfyzecJ0Mcqdo7jQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/me",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.3.30"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 17 Mar 2026 05:11:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 13,\n    \"nombre\": \"Usuario Prueba\",\n    \"email\": \"usuario_prueba@test.com\",\n    \"rol\": \"usuario\",\n    \"saldo\": \"0.00\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
